@@ -55,23 +55,13 @@ Fixed PHP releases: **8.5.12, 8.4.27, 8.3.36, 8.2.35**. Branches 8.1 and older a
 
 Smartscape keeps every process that existed during the selected timeframe. A CronJob creates a new process on every run, so a namespace can show hundreds of "vulnerable" processes that ended days ago. The dashboard therefore counts only processes seen in the last 15 minutes; the charts keep the history. A few recent CronJob runs may still appear, which does not change the number of workloads to fix.
 
-## Remediation
-
-1. Update PHP to the fixed release of your branch and restart PHP-FPM / Apache. Kubernetes: rebuild the image and redeploy the workload, CronJobs included (each run restarts the old image until it is replaced). Compute: distribution package and service restart.
-2. Branches 8.1 and older: migrate to 8.2 or newer; a distribution backport (Ubuntu, sury.org) only bridges the gap.
-3. Interim mitigation, which reduces exposure without removing it: disable `session.upload_progress.enabled` in php.ini; prefer PHP-FPM over mod_php, the most exposed setup; enable your WAF vendor's temporary rules.
-4. UNKNOWN processes: a lifetime of a few minutes usually means a job that ended before detection; otherwise run `php -v` on the machine or inside the container.
-
 ## Limits
 
 - The dashboard reads the PHP **runtime** version. PHP extensions and Composer dependencies are not covered.
 - Processes without OneAgent do not appear.
 - Attribution to a namespace requires Kubernetes monitoring; otherwise the process is counted under its host, in the Compute scope.
 
-## Updating the fixed versions
-
-When PHP publishes a new security release, the thresholds must be updated. Ask your PacketPerf contact for a regenerated file (the fixed versions are a single constant in our generator). If you prefer to edit it yourself, each tile query carries the four patch numbers in the expression `v_minor == 2 and v_patch < 35`, and so on for 8.3, 8.4 and 8.5.
 
 ## Support
 
-Questions, a Kubernetes cluster that shows "unknown workload", a version that is not detected: contact your usual PacketPerf representative. We can also adapt the dashboard to another runtime (Java, Node.js, .NET) with the same approach.
+Questions, a Kubernetes cluster that shows "unknown workload", a version that is not detected: contact your usual PacketPerf representative. 
