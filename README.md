@@ -1,7 +1,6 @@
 # PHP2Shell exposure dashboard for Dynatrace
 
-**CVE-2026-109618 / CVE-2026-109619 — PHP version control (Kubernetes + Compute)**
-Provided by PacketPerf - L'expertise 100 % Dynatrace
+**CVE-2026-109618 / CVE-2026-109619 — PHP version control (Kubernetes + Compute)** Provided by PacketPerf
 
 ## What it is
 
