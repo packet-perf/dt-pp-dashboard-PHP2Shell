@@ -1,0 +1,20 @@
+# Org-wide git conventions check: all the logic lives in packet-perf/git-conventions.
+# The "conventions" check (pull requests only) is required by the org ruleset on the default branch.
+name: Conventions
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  conventions:
+    # Distinct names so that only the pull request run satisfies the required "conventions" check
+    name: ${{ github.event_name == 'pull_request' && 'conventions' || 'conventions (push)' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: packet-perf/git-conventions@main
